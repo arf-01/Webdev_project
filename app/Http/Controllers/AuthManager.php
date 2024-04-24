@@ -20,6 +20,7 @@ class AuthManager extends Controller
     {
         return view('registration');
     }
+    
 
     public function loginpost(Request $request)
     {  
@@ -32,7 +33,7 @@ class AuthManager extends Controller
 
         if(Auth::attempt($credentials))
         {   
-            return redirect()->intended(route('home'));
+            return view('offer');
         }
 
         return redirect()->route('login')->with("credential not valid");
