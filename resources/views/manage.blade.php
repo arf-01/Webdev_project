@@ -27,7 +27,7 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->branch }}</td>
-            <td><a href="{{ route('user.update', ['id' => $user->id]) }}">Payment</a></td>
+            <td><a href="{{ route('payments.index', ['id' => $user->id]) }}">Payment</a></td>
             <td><a href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a></td>
         </tr>
     @endif  

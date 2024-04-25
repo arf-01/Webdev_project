@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
+use App\Models\Payment;
+
 
 class AuthManager extends Controller
 {
@@ -40,22 +43,40 @@ class AuthManager extends Controller
     }
 
     public function registrationpost(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required'
+    ]);
+
+    // Create the user
+    $user = User::create([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->input('password')),
+        'branch' => $request->input('branch')
+    ]);
+
+    // Create payment entries for the next 12 months
+    $registrationDate = Carbon::now();
+    $startDate = $registrationDate->copy()->startOfMonth();
+
+    for ($i = 0; $i < 12; $i++) {
+        $endDate = $startDate->copy()->endOfMonth();
+
+        Payment::create([
+            'user_id' => $user->id,
+            'month' => $startDate->format('F'),
+            'year' => $startDate->format('Y'),
+            // You may add other fields here as needed
         ]);
 
-        $data['name'] = $request->input('name');
-        $data['email'] = $request->input('email');
-        $data['password'] = Hash::make($request->input('password'));
-        $data['branch'] = $request->input('branch');
-
-        User::create($data);
-
-        return redirect()->route('login')->with("registration successfull");
+        $startDate->addMonth()->startOfMonth();
     }
+
+    return redirect()->route('login')->with("registration successfull");
+}
 
     public function logout()
     {
@@ -63,4 +84,4 @@ class AuthManager extends Controller
         Auth::logout();
         return redirect()->route('home');
     }
-}
+}  
