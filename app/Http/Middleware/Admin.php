@@ -33,7 +33,7 @@ class Admin
         }
         else
         {
-            return response()->view('login');
+            return redirect()->route('login')->with('error', 'Invalid credentials');
         }
 
 
