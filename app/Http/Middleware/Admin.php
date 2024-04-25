@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
 
 class Admin
 {
@@ -23,8 +24,8 @@ class Admin
         $credentials = $request->only('email', 'password');
 
         if(Auth::attempt($credentials) && Auth::user()->is_admin==1)
-        {   
-            return response()->view('manage');
+        {    $users = User::all();
+            return response()->view('manage', compact('users'));
         }
 
         else if(Auth::attempt($credentials) && Auth::user()->is_admin==0)
