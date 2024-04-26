@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use App\Models\Branch;
 
 class Admin
 {
@@ -25,7 +26,8 @@ class Admin
 
         if(Auth::attempt($credentials) && Auth::user()->is_admin==1)
         {    $users = User::all();
-            return response()->view('manage', compact('users'));
+             $br=Branch::all();
+            return response()->view('manage', compact('users','br'));
         }
 
         else if(Auth::attempt($credentials) && Auth::user()->is_admin==0)
