@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
      return view('home'); 
@@ -26,6 +27,8 @@ Route::get('/', [HomeController::class, 'ind'])->name('home');
 Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('branch.delete');
 Route::post('/branches', [BranchController::class, 'store'])->name('branch.create');
 Route::get('/manage', [BranchController::class, 'redir'])->name('manage');
+Route::post('/check-availability', [BookingController::class, 'checkAvailability'])->name('check.availability');
+
 
 
 

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->tinyInteger('is_admin')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('branch');
+            $table->string('hometown'); // Changed 'branch' to 'hometown'
+            $table->string('branch')->default('default_branch'); // Default value for branch
+            $table->string('session')->default('default_session'); // Default value for sessi
             $table->rememberToken();
             $table->timestamps();
         });

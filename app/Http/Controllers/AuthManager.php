@@ -55,9 +55,11 @@ class AuthManager extends Controller
         'name' => $request->input('name'),
         'email' => $request->input('email'),
         'password' => Hash::make($request->input('password')),
-        'branch' => $request->input('branch')
-    ]);
+        'hometown' => $request->input('hometown')
+       
 
+
+    ]);
     // Create payment entries for the next 12 months
     $registrationDate = Carbon::now();
     $startDate = $registrationDate->copy()->startOfMonth();

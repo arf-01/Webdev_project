@@ -29,8 +29,8 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Branch</label>
-    <input type="text" class="form-control" name="branch">
+    <label class="form-label">Hometown</label>
+    <input type="text" class="form-control" name="hometown">
 </div>
    
  
