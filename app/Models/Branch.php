@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,5 +9,7 @@ class Branch extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'morning_session', 'evening_session'];
+    protected $fillable = ['name', 'address', 'morning_session', 'evening_session', 'email', 'password'];
+
+    
 }

@@ -1,91 +1,167 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@extends('layout')
 
-<div class="container">
-    <h1>User List</h1>
-
-    <!-- Existing User List -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Serial Number</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Branch</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($users as $user)
-                @if($user->is_admin == 0)
-                    <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->branch }}</td>
-                        <td><a href="{{ route('payments.index', ['id' => $user->id]) }}">Payment</a></td>
-                        <td><a href="{{ route('user.delete', ['id' => $user->id]) }}">Delete</a></td>
-                    </tr>
-                @endif
-            @endforeach
-        </tbody>
-    </table>
-
-    <hr>
-
-    <!-- Branches Section -->
-    <h2>Branches</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Branch ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($br as $branch)
-                <tr>
-                    <td>{{ $branch->id }}</td>
-                    <td>{{ $branch->name }}</td>
-                    <td>{{ $branch->address }}</td>
-                    <td>
-                        <form action="{{ route('branch.delete', ['id' => $branch->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <hr>
-
-    <!-- Add Branch Form -->
-    <h2>Add Branch</h2>
-    <form action="{{ route('branch.create') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label for="branch_name" class="form-label">Branch Name</label>
-            <input type="text" class="form-control" id="branch_name" name="branch_name" required>
+@section('content')
+<div class="container mt-4"> <!-- Added mt-4 class for top margin -->
+    <div class="row">
+        <!-- Side Dashboard -->
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="#user-list" class="list-group-item list-group-item-action active" data-bs-toggle="tab">User List</a>
+                <a href="#branch-list" class="list-group-item list-group-item-action" data-bs-toggle="tab">Branches</a>
+                <a href="#add-branch" class="list-group-item list-group-item-action" data-bs-toggle="tab">Add Branch</a>
+                <a href="#add-package" class="list-group-item list-group-item-action" data-bs-toggle="tab">Add Package</a> 
+                <a href="#revenue-calculation" class="list-group-item list-group-item-action" data-bs-toggle="tab">Revenue Calculation</a>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="branch_address" class="form-label">Branch Address</label>
-            <input type="text" class="form-control" id="branch_address" name="branch_address" required>
+
+        <!-- Main Content -->
+        <div class="col-md-9"> 
+            <div class="tab-content">
+                <!-- User List -->
+                <div class="tab-pane fade show active" id="user-list">
+                    <h1>User List</h1>
+                    <table class="table">
+                        <!-- Table Header -->
+                        <thead>
+                            <tr>
+                                <th scope="col">Serial Number</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Branch</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Body -->
+                        <tbody>
+                            @foreach($users as $user)
+                                @if($user->is_admin == 0)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->branch }}</td>
+                                        <td>
+                                           
+                                            <a href="{{ route('user.delete', ['id' => $user->id]) }}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Branch List -->
+                <div class="tab-pane fade" id="branch-list">
+                    <h1>Branches</h1>
+                    <table class="table">
+                        <!-- Table Header -->
+                        <thead>
+                            <tr>
+                                <th scope="col">Branch ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <!-- Table Body -->
+                        <tbody>
+                            @foreach($br as $branch)
+                                <tr>
+                                    <td>{{ $branch->id }}</td>
+                                    <td>{{ $branch->name }}</td>
+                                    <td>{{ $branch->address }}</td>
+                                    <td>
+                                        <form action="{{ route('branch.delete', ['id' => $branch->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Add Branch Form -->
+                <div class="tab-pane fade" id="add-branch">
+                    <h1>Add Branch</h1>
+                    <form action="{{ route('branch.create') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="branch_name" class="form-label">Branch Name</label>
+                            <input type="text" class="form-control" id="branch_name" name="branch_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="branch_address" class="form-label">Branch Address</label>
+                            <input type="text" class="form-control" id="branch_address" name="branch_address" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Branch</button>
+                    </form>
+                </div>
+
+                <!-- Add Package Form -->
+                <div class="tab-pane fade" id="add-package">
+                    <h1>Add Package</h1>
+                    <form action="{{ route('packages.create') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="package_name" class="form-label">Package Name</label>
+                            <input type="text" class="form-control" id="package_name" name="package_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="original_price" class="form-label">Original Price</label>
+                            <input type="number" class="form-control" id="original_price" name="original_price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="discount_percentage" class="form-label">Discount Percentage</label>
+                            <input type="number" class="form-control" id="discount_percentage" name="discount_percentage" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="background_image" class="form-label">Background Image</label>
+                            <input type="file" class="form-control" id="background_image" name="background_image">
+                        </div>
+                        <div class="mb-3">
+                            <label for="duration" class="form-label">Duration (in months)</label>
+                            <input type="number" class="form-control" id="duration" name="duration" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Package</button>
+                    </form>
+                </div>
+///////////////////////////////////////////////////////////////////////
+                <div class="tab-pane fade" id="revenue-calculation">
+                    <h1>Revenue Calculation</h1>
+                    <form action="{{ route('revenue.calculate') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="start_date" name="start_date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="end_date" name="end_date" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Calculate Revenue</button>
+                    </form>
+                    
+                </div>
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+            </div>
         </div>
-        <button type="submit" class="btn btn-success">Add Branch</button>
-    </form>
+    </div>
 </div>
 
+<!-- Include Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection

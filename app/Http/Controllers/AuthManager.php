@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use App\Models\Payment;
+use App\Models\Branch;
 
 
 class AuthManager extends Controller
@@ -20,8 +21,10 @@ class AuthManager extends Controller
     }
 
     public function registration()
-    {
-        return view('registration');
+    {     
+        $branches = Branch::all(); 
+        return view('registration', compact('branches'));
+       // return view('registration');
     }
     
 
@@ -55,29 +58,23 @@ class AuthManager extends Controller
         'name' => $request->input('name'),
         'email' => $request->input('email'),
         'password' => Hash::make($request->input('password')),
-        'hometown' => $request->input('hometown')
+        'hometown' => $request->input('hometown'),
+        'branch' => $request->input('branch'),
+       // 'session' => $request->input('session')
+       // 'session' =>
+
        
 
 
     ]);
     // Create payment entries for the next 12 months
-    $registrationDate = Carbon::now();
-    $startDate = $registrationDate->copy()->startOfMonth();
+    
 
-    for ($i = 0; $i < 12; $i++) {
-        $endDate = $startDate->copy()->endOfMonth();
-
-        Payment::create([
-            'user_id' => $user->id,
-            'month' => $startDate->format('F'),
-            'year' => $startDate->format('Y'),
-            // You may add other fields here as needed
-        ]);
-
-        $startDate->addMonth()->startOfMonth();
-    }
-
-    return redirect()->route('login')->with("registration successfull");
+  
+       // $branches = Branch::all(); // Fetch all branches from the database
+    
+        return redirect()->route('login')->with("registration successfull");
+    
 }
 
     public function logout()

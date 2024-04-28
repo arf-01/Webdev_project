@@ -24,6 +24,21 @@ class User extends Authenticatable
         'session',  // New column
     ];
 
+
+  /*  protected static function boot()
+    {
+        parent::boot();
+
+        // Listen for the 'creating' event
+        static::creating(function ($user) {
+            // Check if the branch attribute is empty
+            if (empty($user->branch)) {
+                // Set the default branch value
+                $user->branch = 'default_branch';
+            }
+        });
+    }*/
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,4 +58,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    
 }

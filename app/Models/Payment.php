@@ -19,6 +19,7 @@ class Payment extends Model
         'month',
         'year',
         'paid',
+        'amount', // Include the 'amount' attribute in the fillable array
     ];
 
     /**
@@ -29,3 +30,4 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 }
+

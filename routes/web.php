@@ -8,6 +8,9 @@ use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RevenueController;
+
 
 Route::get('/', function () {
      return view('home'); 
@@ -19,15 +22,19 @@ Route::post('/login', [AuthManager::class, 'loginpost'])->middleware(Admin::clas
 Route::get('/registration',[AuthManager::class, 'registration'])->name('registration');
 Route::post('/registration', [AuthManager::class, 'registrationpost'])->name('registrationpost');
 Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
-//Route::get('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
 Route::get('/user/{id}/delete', [UserController::class, 'delete'])->name('user.delete');
-Route::get('/payments', [AdminPaymentController::class, 'index'])->name('payments.index');
-Route::put('/payments/{payment}', [AdminPaymentController::class, 'update'])->name('payments.update');
 Route::get('/', [HomeController::class, 'ind'])->name('home');
 Route::delete('/branches/{id}', [BranchController::class, 'destroy'])->name('branch.delete');
 Route::post('/branches', [BranchController::class, 'store'])->name('branch.create');
 Route::get('/manage', [BranchController::class, 'redir'])->name('manage');
 Route::post('/check-availability', [BookingController::class, 'checkAvailability'])->name('check.availability');
+Route::post('/packages', [BranchController::class, 'store_package'])->name('packages.create');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update');
+//Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
+
+
 
 
 

@@ -17,13 +17,16 @@ return new class extends Migration
             $table->string('month');
             $table->integer('year');
             $table->boolean('paid')->default(false);
+            $table->decimal('amount', 10, 2)->default(0.00); // Adding the 'amount' column
             $table->timestamps();
         });
     }
     
+    /**
+     * Reverse the migrations.
+     */
     public function down()
     {
         Schema::dropIfExists('payments');
     }
-    
 };
