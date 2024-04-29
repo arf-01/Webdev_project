@@ -33,6 +33,8 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update'
 //Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
+Route::post('/sell-product/{id}', [BranchController::class, 'sellProduct'])->name('sellProduct');
+
 
 
 

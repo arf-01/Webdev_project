@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use App\Models\User; 
+use App\Models\Sale; 
 use App\Models\Package;// Import the User model
 use Illuminate\Support\Facades\Hash;
 
@@ -69,7 +70,7 @@ class BranchController extends Controller
            'original_price' => 'required|numeric',
            'discount_percentage' => 'numeric',
            'background_image' => 'image', 
-           'duration' => 'numeric', 
+           'product_code' => 'required|string|max:255',
         ]);
 
 
@@ -89,7 +90,7 @@ class BranchController extends Controller
         $package->discount_percentage = $validatedData['discount_percentage'];
         $package->discounted_price = $discountedPrice;
         $package->background_image =$backgroundImagePath;
-        $package->duration =$validatedData['duration'];
+        $package->product_code = $validatedData['product_code']; 
 
        // dd($package);
 
@@ -100,4 +101,33 @@ class BranchController extends Controller
 
        return redirect()->route('manage');
     }
+
+    public function sellProduct(Request $request, $id)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|string|email|max:255',
+           // 'branch_name' => 'required|string|max:255',
+        ]);
+    
+        // Get the branch name and email from the authenticated user
+        $branch_name = auth()->user()->name;
+        $discounted_price = $request->discounted_price;
+       // $branch_email = auth()->user()->email;
+    
+        // Create a new sale record
+        Sale::create([
+            'package_id' => $id,
+           'discounted_price'=> $discounted_price ,
+            'customer_name' => $validatedData['customer_name'],
+            'customer_email' => $validatedData['customer_email'],
+            'branch_name' => $branch_name,
+        ]);
+    
+        // You can also add the branch email if needed
+        Package::findOrFail($id)->delete();
+        // Redirect or return a response as needed
+    }
+
 }

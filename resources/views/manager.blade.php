@@ -4,45 +4,48 @@
     <div class="container">
         <h1>Welcome, {{ $x }}</h1>
 
-        <h2>List of Users:</h2>
-        @foreach($users as $user)
-            @if($user->branch == $x)
-                <div class="card user-card">
-                    <div class="card-body">
-                        <h5 class="card-title">User: {{ $user->name }}</h5>
-                        <p class="card-text">Email: {{ $user->email }}</p>
-                        <!-- Add more user details as needed -->
+        <h2>List of Products:</h2>
+        @foreach($packages as $package)
+    @if($package->name == $x)
+        <div class="card user-card">
+            <div class="card-body">
+               
+                <div>
+                    <h6>Product Details:</h6>
+                    <!-- Display product details here -->
+                    <p>Product Code: {{ $package->product_code }}</p>
+                    <p>Original Price: {{ $package->original_price }}</p>
+                    <p>Discounted Price: {{ $package->discounted_price }}</p>
+                    <!-- Add more product details as needed -->
 
-                        <!-- Payment Form -->
-                        <form action="{{ route('payments.store') }}" method="POST" class="d-inline">
-                            @csrf
-                            <input type="hidden" name="user_id" value="{{ $user->id }}">
-                            <div class="mb-1">
-                                <input type="text" class="form-control" placeholder="Month" name="month">
-                            </div>
-                            <div class="mb-1">
-                                <input type="text" class="form-control" placeholder="Year" name="year">
-                            </div>
-                            <div class="mb-1">
-                                <input type="text" class="form-control" placeholder="Paid" name="paid">
-                            </div>
-                            <div class="mb-1">
-                                <input type="text" class="form-control" placeholder="Amount" name="amount">
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-sm">Confirm</button>
-                        </form>
+                    <!-- Form to sell the product -->
+                    <form action="{{ route('sellProduct', $package->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <div class="mb-1">
+                            <input type="text" class="form-control" placeholder="Customer Name" name="customer_name">
+                        </div>
+                        <div class="mb-1">
+                            <input type="email" class="form-control" placeholder="Customer Email" name="customer_email">
+                        </div>
 
-                        <!-- Delete User Form -->
-                        <form id="deleteForm{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" onclick="deleteUser({{ $user->id }})" class="btn btn-danger btn-sm mx-2">Delete</button>
-                        </form>
-                    </div>
+                        <div class="mb-1">
+                        <input type="hidden" class="form-control" value="{{ $package->discounted_price }}" name="discounted_price">
+
+                         </div>
+
+                        <!-- Add more fields for customer details as needed -->
+
+                        <button type="submit" class="btn btn-success btn-sm">Sell Product</button>
+                    </form>
                 </div>
-            @endif
-        @endforeach
-    </div>
+
+                <!-- Delete User Form -->
+               
+            </div>
+        </div>
+    @endif
+@endforeach
+
 
     <script>
         function deleteUser(userId) {
@@ -51,5 +54,4 @@
             }
         }
     </script>
-@endsection  
-
+@endsection

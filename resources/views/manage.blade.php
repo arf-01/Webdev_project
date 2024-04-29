@@ -1,9 +1,9 @@
 @extends('layout')
 
 @section('content')
-<div class="container mt-4"> <!-- Added mt-4 class for top margin -->
+<div class="container mt-4"> 
     <div class="row">
-        <!-- Side Dashboard -->
+
         <div class="col-md-3">
             <div class="list-group">
                 <a href="#user-list" class="list-group-item list-group-item-action active" data-bs-toggle="tab">User List</a>
@@ -132,30 +132,15 @@
                             <input type="file" class="form-control" id="background_image" name="background_image">
                         </div>
                         <div class="mb-3">
-                            <label for="duration" class="form-label">Duration (in months)</label>
-                            <input type="number" class="form-control" id="duration" name="duration" required>
-                        </div>
+    <label for="product_code" class="form-label">Product Code</label>
+    <input type="text" class="form-control" id="product_code" name="product_code" required>
+</div>
+
                         <button type="submit" class="btn btn-success">Add Package</button>
                     </form>
                 </div>
 ///////////////////////////////////////////////////////////////////////
-                <div class="tab-pane fade" id="revenue-calculation">
-                    <h1>Revenue Calculation</h1>
-                    <form action="{{ route('revenue.calculate') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="start_date" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="start_date" name="start_date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="end_date" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="end_date" name="end_date" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Calculate Revenue</button>
-                    </form>
-                    
-                </div>
-
+               
                 ////////////////////////////////////////////////////////////////////////////////////////////////
             </div>
         </div>

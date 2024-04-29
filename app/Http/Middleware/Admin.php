@@ -41,9 +41,9 @@ class Admin
         {  
              //  $packages = Package::all(); 
              // return response()->view('offer', compact('packages'));
-             $users = User::all();
+             $packages = Package::all();
              $x=Auth::user()->name;
-           return response()->view('manager' ,compact('users','x'));
+           return response()->view('manager' ,compact('packages','x'));
                 
 
         }
