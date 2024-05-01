@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +20,9 @@ class CreatePackagesTable extends Migration
             $table->string('background_image')->nullable();
             $table->string('product_code')->nullable(); // Assuming 'duration' is now 'product_code'
             $table->decimal('discounted_price', 10, 2)->nullable(); // Move this line up
+            $table->integer('total_available_tickets')->nullable(); 
+            $table->text('description')->nullable(); 
+            $table->date('start_date')->nullable();// Add this line to create the 'description' column
             $table->timestamps();
         });
     }

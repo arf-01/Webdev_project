@@ -34,6 +34,7 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('user.update'
 Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 Route::post('/payments', [PaymentController::class, 'store'])->name('payments.store');
 Route::post('/sell-product/{id}', [BranchController::class, 'sellProduct'])->name('sellProduct');
+Route::get('/search-product', [SearchBar::class,'search'])->name('searchProduct');
 
 
 

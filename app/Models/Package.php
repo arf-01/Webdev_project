@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,14 +16,22 @@ class Package extends Model
         'discount_percentage',
         'background_image',
         'product_code',
+        'description', 
+        'start_date',
+        'total_available_tickets', 
     ];
 
-    // Accessor method to get the discounted price
+    protected $dates = [
+        'start_date', // Define start_date as a date attribute
+      // Define end_date as a date attribute
+    ];
+
+  
     public function getDiscountedPriceAttribute(): float
     {
-        // Calculate the discounted price based on original price and discount percentage
+       
         return $this->original_price * (1 - ($this->discount_percentage / 100));
     }
 
-    // You can define any relationships or additional methods here
+   
 }

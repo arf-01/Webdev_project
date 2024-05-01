@@ -1,8 +1,28 @@
 @extends('layout')
 
 @section('content')
+
+
+
+@if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    
     <div class="container">
         <h1>Welcome, {{ $x }}</h1>
+
+        <div class="mb-3">
+            <!-- Search bar -->
+            <form action="{{ route('searchProduct') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by Product Code" name="product_code">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
 
         <h2>List of Products:</h2>
         @foreach($packages as $package)
@@ -19,7 +39,7 @@
                     <!-- Add more product details as needed -->
 
                     <!-- Form to sell the product -->
-                    <form action="{{ route('sellProduct', $package->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('sellProduct', $package->product_code) }}" method="POST" class="d-inline">
                         @csrf
                         <div class="mb-1">
                             <input type="text" class="form-control" placeholder="Customer Name" name="customer_name">

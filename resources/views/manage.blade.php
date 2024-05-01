@@ -114,30 +114,44 @@
                 <div class="tab-pane fade" id="add-package">
                     <h1>Add Package</h1>
                     <form action="{{ route('packages.create') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="package_name" class="form-label">Package Name</label>
-                            <input type="text" class="form-control" id="package_name" name="package_name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="original_price" class="form-label">Original Price</label>
-                            <input type="number" class="form-control" id="original_price" name="original_price" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="discount_percentage" class="form-label">Discount Percentage</label>
-                            <input type="number" class="form-control" id="discount_percentage" name="discount_percentage" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="background_image" class="form-label">Background Image</label>
-                            <input type="file" class="form-control" id="background_image" name="background_image">
-                        </div>
-                        <div class="mb-3">
-    <label for="product_code" class="form-label">Product Code</label>
-    <input type="text" class="form-control" id="product_code" name="product_code" required>
-</div>
+    @csrf
+    <div class="mb-3">
+        <label for="package_name" class="form-label">Branch Name</label>
+        <input type="text" class="form-control" id="package_name" name="package_name" required>
+    </div>
+    <div class="mb-3">
+        <label for="original_price" class="form-label">Original Price</label>
+        <input type="number" class="form-control" id="original_price" name="original_price" required>
+    </div>
+    <div class="mb-3">
+        <label for="discount_percentage" class="form-label">Discount Percentage</label>
+        <input type="number" class="form-control" id="discount_percentage" name="discount_percentage" required>
+    </div>
+    <div class="mb-3">
+        <label for="background_image" class="form-label">Background Image</label>
+        <input type="file" class="form-control" id="background_image" name="background_image">
+    </div>
+    <div class="mb-3">
+        <label for="product_code" class="form-label">Product Code</label>
+        <input type="text" class="form-control" id="product_code" name="product_code" required>
+    </div>
 
-                        <button type="submit" class="btn btn-success">Add Package</button>
-                    </form>
+    <div class="mb-3">
+        <label for="total_available_tickets" class="form-label">Total Available Tickets</label>
+        <input type="number" class="form-control" id="total_available_tickets" name="total_available_tickets" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+    </div>
+
+    <div class="mb-3">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" required>
+        </div>
+    <button type="submit" class="btn btn-success">Add Package</button>
+</form>
+
                 </div>
 ///////////////////////////////////////////////////////////////////////
                
