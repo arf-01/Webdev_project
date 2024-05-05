@@ -30,7 +30,7 @@
         </div>
         <div class="receipt-details">
             <p><strong>Customer Name:</strong> {{ $sale->customer_name }}</p>
-            <p><strong>Customer Email:</strong> {{ $sale->customer_email }}</p>
+            <p><strong>Customer Mobile:</strong> {{ $sale->customer_mobile }}</p>
             <p><strong>Package Code:</strong> {{ $package->description }}</p>
             <p><strong>Discounted Price:</strong> ${{ $sale->discounted_price }}</p>
         </div>

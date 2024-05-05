@@ -13,7 +13,7 @@ class Sale extends Model
         'package_id',
         'discounted_price',
         'customer_name',
-        'customer_email',
+        'customer_mobile',
         'branch_name',
         'sale_date',
     ];

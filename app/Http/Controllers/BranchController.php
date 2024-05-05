@@ -100,7 +100,7 @@ class BranchController extends Controller
         // Validate the request data
         $validatedData = $request->validate([
             'customer_name' => 'required|string|max:255',
-            'customer_email' => 'required|string|email|max:255',
+            'customer_mobile' => 'required|string|max:255',
         ]);
     
         // Get the authenticated user's branch name
@@ -113,20 +113,21 @@ class BranchController extends Controller
         $total_available_tickets = $package->total_available_tickets;
     
         // Check if there are available tickets
-        if ($total_available_tickets > 0) {
+        if ($request->filled('num_tickets') && $total_available_tickets >= $request->num_tickets) {
             // Subtract one from the total available tickets
-            $package->total_available_tickets = $total_available_tickets - 1;
+            $package->total_available_tickets -= $request->num_tickets;
             $package->save();
     
             // Calculate discounted price
-            $discounted_price = $package->discounted_price;
+            $discounted_price = $package->discounted_price * $request->num_tickets;
+
     
             // Create a new sale record
             $sale = Sale::create([
                 'package_id' => $package->id,
                 'discounted_price' => $discounted_price,
                 'customer_name' => $validatedData['customer_name'],
-                'customer_email' => $validatedData['customer_email'],
+                'customer_mobile' => $validatedData['customer_mobile'],
                 'branch_name' => $branch_name,
             ]);
     

@@ -17,7 +17,7 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('package_id');
             $table->decimal('discounted_price', 8, 2);
             $table->string('customer_name');
-            $table->string('customer_email');
+            $table->string('customer_mobile');
             $table->string('branch_name');
             $table->timestamp('sale_date')->useCurrent();
             $table->timestamps();

@@ -2,76 +2,69 @@
 
 @section('content')
 
-
-
 @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+<div class="container">
+    <h1>Welcome, {{ $x }}</h1>
+
+    <div class="mb-3">
+        <!-- Search bar -->
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search by Product Code">
+            <button type="button" class="btn btn-primary" onclick="searchProduct()">Search</button>
         </div>
-    @endif
+    </div>
 
-    
-    <div class="container">
-        <h1>Welcome, {{ $x }}</h1>
+    <h2>List of Products:</h2>
+    @foreach($packages as $package)
+        @if($package->name == $x)
+            <div class="card user-card" id="product{{ $package->product_code }}"> <!-- Unique identifier added -->
+                <div class="card-body">
+                    <div>
+                        <h6>Product Details:</h6>
+                        <!-- Display product details here -->
+                        <p>Product Code: {{ $package->product_code }}</p>
+                        <p>Original Price: {{ $package->original_price }}</p>
+                        <p>Discounted Price: {{ $package->discounted_price }}</p>
+                        <!-- Add more product details as needed -->
 
-        <div class="mb-3">
-            <!-- Search bar -->
-            <form action="{{ route('searchProduct') }}" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by Product Code" name="product_code">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                        <!-- Form to sell the product -->
+                        <form action="{{ route('sellProduct', $package->product_code) }}" method="POST" class="d-inline">
+                            @csrf
+                            <div class="mb-1">
+                                <input type="text" class="form-control" placeholder="Customer Name" name="customer_name">
+                            </div>
+                            <div class="mb-1">
+    <input type="tel" class="form-control" placeholder="Customer Mobile Number" name="customer_mobile">
+</div>
+
+                            <div class="mb-1">
+                                <input type="number" class="form-control" placeholder="Number of Tickets" name="num_tickets" min="1">
+                            </div>
+                            <input type="hidden" class="form-control" value="{{ $package->discounted_price }}" name="discounted_price">
+                            <button type="submit" class="btn btn-success btn-sm">Sell Product</button>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </div>
-
-        <h2>List of Products:</h2>
-        @foreach($packages as $package)
-    @if($package->name == $x)
-        <div class="card user-card">
-            <div class="card-body">
-               
-                <div>
-                    <h6>Product Details:</h6>
-                    <!-- Display product details here -->
-                    <p>Product Code: {{ $package->product_code }}</p>
-                    <p>Original Price: {{ $package->original_price }}</p>
-                    <p>Discounted Price: {{ $package->discounted_price }}</p>
-                    <!-- Add more product details as needed -->
-
-                    <!-- Form to sell the product -->
-                    <form action="{{ route('sellProduct', $package->product_code) }}" method="POST" class="d-inline">
-                        @csrf
-                        <div class="mb-1">
-                            <input type="text" class="form-control" placeholder="Customer Name" name="customer_name">
-                        </div>
-                        <div class="mb-1">
-                            <input type="email" class="form-control" placeholder="Customer Email" name="customer_email">
-                        </div>
-
-                        <div class="mb-1">
-                        <input type="hidden" class="form-control" value="{{ $package->discounted_price }}" name="discounted_price">
-
-                         </div>
-
-                        <!-- Add more fields for customer details as needed -->
-
-                        <button type="submit" class="btn btn-success btn-sm">Sell Product</button>
-                    </form>
-                </div>
-
-                <!-- Delete User Form -->
-               
             </div>
-        </div>
-    @endif
-@endforeach
+        @endif
+    @endforeach
+</div>
 
-
-    <script>
-        function deleteUser(userId) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                document.getElementById('deleteForm' + userId).submit();
-            }
+<script>
+    function searchProduct() {
+        var searchInput = document.getElementById('searchInput').value;
+        var productElement = document.getElementById('product' + searchInput);
+        if (productElement) {
+            productElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            alert('Product not found.');
         }
-    </script>
+    }
+</script>
+
 @endsection

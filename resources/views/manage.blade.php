@@ -18,7 +18,7 @@
         <div class="col-md-9"> 
             <div class="tab-content">
                 <!-- User List -->
-                <div class="tab-pane fade show active" id="user-list">
+                <div class="tab-pane fade " id="user-list">
                     <h1>User List</h1>
                     <table class="table">
                         <!-- Table Header -->
@@ -153,9 +153,45 @@
 </form>
 
                 </div>
-///////////////////////////////////////////////////////////////////////
+
+
+<!-- Revenue Calculation Form -->
+<div class="tab-pane fade show active" id="revenue-calculation">
+    <h1>Revenue Calculation</h1>
+    <form action="{{ route('calculateRevenue') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+            <label for="from_date" class="form-label">From Date</label>
+            <input type="date" class="form-control" id="from_date" name="from_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="to_date" class="form-label">To Date</label>
+            <input type="date" class="form-control" id="to_date" name="to_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="branch_id" class="form-label">Branch (Optional)</label>
+            <select class="form-select" id="branch_id" name="branch_id">
+    <option value="">Select Branch</option>
+    @foreach($br as $branch)
+        <option value="{{ $branch->name }}">{{ $branch->name }}</option>
+    @endforeach
+</select>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate Revenue</button>
+    </form>
+
+    <!-- Display revenue calculation result here -->
+    @if(isset($revenue))
+        <div class="mt-4">
+            <h3>Revenue for the selected period:</h3>
+            <p>Total Revenue: {{ $revenue }}</p>
+        </div>
+    @endif
+</div>
+
                
-                ////////////////////////////////////////////////////////////////////////////////////////////////
+                
             </div>
         </div>
     </div>
