@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Branch;
+use App\Models\Package;
 
 class HomeController extends Controller
 {  
@@ -10,10 +10,20 @@ class HomeController extends Controller
 
     public function ind()
     {
-        $branches = Branch::all(); 
-        //dd($branches);
-        return view('home', compact('branches'));
+        $packages =Package::all(); 
+    
+       
+        $newArrivals = Package::where('created_at', '>=', now()->subDays(7))
+        ->orderBy('created_at', 'desc')
+        ->limit(4) // Adjust the limit as needed
+        ->get();
+
+        return view('home', compact('packages','newArrivals'));
     }
+
+
+
+
 
    
 }

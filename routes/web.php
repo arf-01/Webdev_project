@@ -10,6 +10,10 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\Recover;
+use App\Http\Controllers\CartControlle;
+
+
 
 
 Route::get('/', function () {
@@ -36,6 +40,17 @@ Route::post('/payments', [PaymentController::class, 'store'])->name('payments.st
 Route::post('/sell-product/{id}', [BranchController::class, 'sellProduct'])->name('sellProduct');
 //Route::get('/search-product', [SearchBar::class,'search'])->name('searchProduct');
 Route::post('/calculate-revenue', [RevenueController::class, 'calculate'])->name('calculateRevenue');
+// routes/web.php
+Route::get('/recvr', [Recover::class, 'showRecoveryPage'])->name('recvr');
+Route::post('/reset', [Recover::class, 'sendResetLink'])->name('sendResetLink');
+Route::post('/reset-password', [Recover::class, 'resetPassword'])->name('password.reset');
+
+
+Route::get('/cart', [CartControlle::class, 'showCart'])->name('cart.show');
+Route::post('/cart/add/{id}', [CartControlle::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update/{id}', [CartControlle::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartControlle::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart/checkout', [CartControlle::class, 'checkout'])->name('cart.checkout');
 
 
 

@@ -61,7 +61,9 @@ class BranchController extends Controller
     }
 
     public function store_package(Request $request)
-    {
+    {    
+
+        
         // Validate the request data
         $validatedData = $request->validate([
             'package_name' => 'required|string|max:255',
@@ -70,7 +72,7 @@ class BranchController extends Controller
             'background_image' => 'image', 
             'product_code' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'total_available_tickets'=>'required|numeric',
+            'total_available'=>'required|numeric',
         ]);
 
         $backgroundImage = $request->file('background_image');
@@ -90,7 +92,7 @@ class BranchController extends Controller
         $package->background_image = $backgroundImagePath;
         $package->product_code = $validatedData['product_code']; 
         $package->description = $validatedData['description']; 
-        $package->total_available_tickets = $validatedData['total_available_tickets']; 
+        $package->total_available_tickets= $validatedData['total_available']; 
         $package->save();
 
         return redirect()->route('manage');

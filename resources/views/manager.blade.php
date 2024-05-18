@@ -43,7 +43,7 @@
 </div>
 
                             <div class="mb-1">
-                                <input type="number" class="form-control" placeholder="Number of Tickets" name="num_tickets" min="1">
+                                <input type="number" class="form-control" placeholder="Qunatity" name="num_tickets" min="1">
                             </div>
                             <input type="hidden" class="form-control" value="{{ $package->discounted_price }}" name="discounted_price">
                             <button type="submit" class="btn btn-success btn-sm">Sell Product</button>

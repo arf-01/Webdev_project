@@ -50,7 +50,7 @@ class AuthManager extends Controller
     $request->validate([
         'name' => 'required',
         'email' => 'required|email|unique:users',
-        'password' => 'required'
+        'password' => 'required|confirmed'
     ]);
 
     // Create the user
@@ -73,7 +73,7 @@ class AuthManager extends Controller
   
        // $branches = Branch::all(); // Fetch all branches from the database
     
-        return redirect()->route('login')->with("registration successfull");
+       return redirect()->route('login')->with('success', 'Registration successful');
     
 }
 
